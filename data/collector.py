@@ -118,12 +118,12 @@ class DataCollector:
             },
             "timeSets": [
                 {
-                    "name": "Toute_la_journee",
+                    "name": f"{h:02d}h-{h+1:02d}h",
                     "timeGroups": [{
                         "days": ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
-                        "times": ["0:00-24:00"],
+                        "times": [f"{h}:00-{h+1 if h < 23 else 24}:00"],
                     }],
-                }
+                } for h in range(24)
             ],
             "acceptMode": "AUTO",
         }

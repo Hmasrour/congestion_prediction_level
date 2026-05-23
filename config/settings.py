@@ -18,7 +18,7 @@ ROAD_POINTS: Dict[str, Tuple[float, float]] = {
 }
 
 # ── TomTom Move API ────────────────────────────────────────────
-TOMTOM_API_KEY    = "API_KEY"   # → move.tomtom.com
+TOMTOM_API_KEY    = "TVUEFLcXxPsiNvdq6NxQuaupmLPShrid"   # → move.tomtom.com
 TOMTOM_BASE_URL   = "https://api.tomtom.com/traffic/trafficstats"
 TOMTOM_DATE_FROM  = "2024-08-01"
 TOMTOM_DATE_TO    = "2024-08-31"
