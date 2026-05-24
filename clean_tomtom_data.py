@@ -36,8 +36,7 @@ def process_file(filepath):
             # Parse data from row 5 onwards for this column
             col_data = pd.to_numeric(df.iloc[5:, col_idx], errors='coerce')
             
-            # TomTom often uses 0 for missing data/no probes, we'll replace 0 with NaN 
-            # to avoid skewing the mean down to 0 artificially
+            # Replace 0 with NaN
             col_data = col_data.replace(0, pd.NA)
             
             avg_speed = col_data.mean(skipna=True)
@@ -50,19 +49,25 @@ def process_file(filepath):
             
     return records
 
+
 if __name__ == "__main__":
-    records_part1 = process_file('tomtom_data_daily/RP3323_part1.xlsx')
-    records_part2 = process_file('tomtom_data_daily/RP3323_part2.xlsx')
-
-    all_records = records_part1 + records_part2
-
-    final_df = pd.DataFrame(all_records)
-    final_df = final_df.sort_values(by=['date', 'hour']).reset_index(drop=True)
-
-    final_path = 'data_cleaned/RP3323_August2024_hourly.csv'
-    final_df.to_csv(final_path, index=False)
+    routes = ['RP3323', 'RN1', 'RN11', 'RN23']
     
-    print(f"\nData successfully cleaned and saved to {final_path}")
-    print(f"Total rows: {len(final_df)}")
-    print("\nSample (first 5 rows):")
-    print(final_df.head())
+    for route in routes:
+        print(f"\n===========================")
+        print(f"Cleaning data for route {route}")
+        print(f"===========================")
+        
+        records_part1 = process_file(f'tomtom_data_daily/{route}_part1.xlsx')
+        records_part2 = process_file(f'tomtom_data_daily/{route}_part2.xlsx')
+
+        all_records = records_part1 + records_part2
+
+        final_df = pd.DataFrame(all_records)
+        final_df = final_df.sort_values(by=['date', 'hour']).reset_index(drop=True)
+
+        final_path = f'data_cleaned/{route}_August2024_hourly.csv'
+        final_df.to_csv(final_path, index=False)
+        
+        print(f"✅ Data successfully cleaned and saved to {final_path}")
+        print(f"Total rows: {len(final_df)}")
